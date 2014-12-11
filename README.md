@@ -19,4 +19,5 @@ npm install possible
 
 ## Release History
   * 2014-12-11			v0.1.0			Initial release.
+  * 2014-12-11			v0.1.1			Initial functionality for Sequencer.
 
