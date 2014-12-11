@@ -1,6 +1,6 @@
 # Oridination
 
-Mechanisms to organize and regulate the flow of execution.
+Organize and regulate the flow of execution.
 
 ## NOTE
 
