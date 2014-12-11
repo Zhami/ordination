@@ -1,0 +1,37 @@
+{
+  "name": "ordination",
+  "version": "0.1.0",
+  "title": "Ordination",
+  "description": "Mechanisms to organize and regulate the flow of execution.",
+  "keywords": [
+    "flow",
+    "async"
+  ],
+  "main": "./index.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "homepage": "https://github.com/zhami/ordination",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zhami/ordination.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zhami/ordination/issues"
+  },
+  "licenses": "MIT",
+  "author": {
+    "name": "Stuart Malin",
+    "url": "https://github.com/zhami",
+    "email": "stuart@EnvisixLabs.com"
+  },
+   "scripts": {},
+    "maintainers": [
+    {
+      "name": "Stuart Malin",
+      "email": "stuart@EnvisixLabs.com"
+    }
+  ],
+  "directories": {},
+  "dependencies": {}
+}
