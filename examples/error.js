@@ -12,43 +12,42 @@ var ordination		= require('..');
 
 var	Sequencer		= ordination.Sequencer;
 
-function firstIsSync (rqst, accum, next) {
+function firstIsSync (err, rqst, accum, next) {
 	console.log('firstIsSync:', 'rqst:', rqst);
 	accum.push("firstIsSync");
 
-	next();
+	next(null, rqst, accum);
 }
 
-function secondHasAsyncError (rqst, accum, next) {
+function secondHasAsyncError (err, rqst, accum, next) {
 	console.log('secondIsAsync:', 'rqst:', rqst);
 	accum.push("secondIsAsync");
 
 	function afterTimeout () {
-		next(new Error('Boom!'));
+		next(new Error('Boom!'), rqst, accum);
 	}
 
 	setTimeout(afterTimeout, 1000);
 }
 
-function thirdIsFinal (rqst, accum, next) {
+function thirdIsFinal (err, rqst, accum, next) {
 	console.log('thirdIsFinal:', 'accum:', accum);
 
 	// DON'T CALL next()
 }
 
-function ifError (rqst, accum, err) {
-	console.log('had an error:', err);
-	console.log('rqst:', rqst, 'accum:', accum);
+function ifError (err, rqst, accum) {
+	console.log('had an error:', err, 'rqst:', rqst, 'accum:', accum);
 }
 
 var	steps = [firstIsSync, secondHasAsyncError, thirdIsFinal];
 
 var seq = new Sequencer(steps, ifError);
 
-var rqst = {'i am': 'tbd'};
+var rqst = {'i am': 'the arguments'};
 
 var accum = [];
 
 
-seq.run(rqst, accum);
+seq.next(null, rqst, accum);
 

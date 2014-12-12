@@ -12,35 +12,42 @@ var ordination		= require('..');
 
 var	Sequencer		= ordination.Sequencer;
 
-function firstIsSync (rqst, accum, next) {
+function firstIsSync (err, rqst, accum, next) {
 	console.log('firstIsSync:', 'rqst:', rqst);
 	accum.push("firstIsSync");
 
-	next();
+	next(null, rqst, accum);
 }
 
-function secondIsAsync (rqst, accum, next) {
+function secondIsAsync (err, rqst, accum, next) {
 	console.log('secondIsAsync:', 'rqst:', rqst);
-	accum.push("secondIsAsync");
 
-	setTimeout(next, 1000);
+	function afterTimeout () {
+		accum.push("secondIsAsync");
+		next(null, rqst, accum);
+	}
+
+	setTimeout(afterTimeout, 1000);
 }
 
-function thirdIsFinal (rqst, accum, next) {
+function thirdIsFinal (err, rqst, accum, next) {
 	console.log('thirdIsFinal:', 'accum:', accum);
 
 	// DON'T CALL next()
 }
 
+function ifError (err, rqst, accum) {
+	console.log('had an error:', err, 'rqst:', rqst, 'accum:', accum);
+}
 
 var	steps = [firstIsSync, secondIsAsync, thirdIsFinal];
 
-var seq = new Sequencer(steps);
+var seq = new Sequencer(steps, ifError);
 
-var rqst = {'i am': 'tbd'};
+var rqst = {'i am': 'the request'};
 
 var accum = [];
 
 
-seq.run(rqst, accum);
+seq.next(null, rqst, accum);		// call 'next()' to start; first arg is err (which is null)
 
