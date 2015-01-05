@@ -12,15 +12,15 @@ var ordination		= require('..');
 
 var	Sequencer		= ordination.Sequencer;
 
-function firstIsSync (err, rqst, accum, next) {
-	console.log('firstIsSync:', 'rqst:', rqst);
+function firstStep (err, rqst, accum, next) {
+	console.log('firstStep:', 'rqst:', rqst);
 	accum.push("firstIsSync");
 
 	next(null, rqst, accum);
 }
 
-function secondIsAsync (err, rqst, accum, next) {
-	console.log('secondIsAsync:', 'rqst:', rqst);
+function secondStep (err, rqst, accum, next) {
+	console.log('secondStep:', 'rqst:', rqst);
 
 	function afterTimeout () {
 		accum.push("secondIsAsync");
@@ -30,8 +30,8 @@ function secondIsAsync (err, rqst, accum, next) {
 	setTimeout(afterTimeout, 1000);
 }
 
-function thirdIsFinal (err, rqst, accum, next) {
-	console.log('thirdIsFinal:', 'accum:', accum);
+function thirdStep (err, rqst, accum, next) {
+	console.log('thirdStep:', 'accum:', accum);
 
 	// DON'T CALL next()
 }
@@ -40,7 +40,7 @@ function ifError (err, rqst, accum) {
 	console.log('had an error:', err, 'rqst:', rqst, 'accum:', accum);
 }
 
-var	steps = [firstIsSync, secondIsAsync, thirdIsFinal];
+var	steps = [firstStep, secondStep, thirdStep];
 
 var seq = new Sequencer(steps, ifError);
 
